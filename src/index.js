@@ -1,3 +1,3 @@
-import v from 'v-rule'
+import v from './v'
 export { v }
 export { default } from './VForm'

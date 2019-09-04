@@ -6,7 +6,7 @@ Object.defineProperty(exports, "__esModule", {
 Object.defineProperty(exports, "v", {
   enumerable: true,
   get: function get() {
-    return _vRule["default"];
+    return _v["default"];
   }
 });
 Object.defineProperty(exports, "default", {
@@ -16,7 +16,7 @@ Object.defineProperty(exports, "default", {
   }
 });
 
-var _vRule = _interopRequireDefault(require("v-rule"));
+var _v = _interopRequireDefault(require("./v"));
 
 var _VForm = _interopRequireDefault(require("./VForm"));
 

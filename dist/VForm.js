@@ -11,6 +11,8 @@ var _reactInputMessage = require("./lib/react-input-message");
 
 var _Field = _interopRequireDefault(require("./Field"));
 
+var _v = _interopRequireDefault(require("./v"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -23,9 +25,9 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
 
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
@@ -36,21 +38,75 @@ var VForm =
 function (_React$Component) {
   _inherits(VForm, _React$Component);
 
-  function VForm() {
+  function VForm(props) {
+    var _this;
+
     _classCallCheck(this, VForm);
 
-    return _possibleConstructorReturn(this, _getPrototypeOf(VForm).apply(this, arguments));
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(VForm).call(this, props));
+
+    _this.onMessages = function (messages) {
+      return _this.setState({
+        messages: messages
+      });
+    };
+
+    _this.subscribe = function () {
+      var validation = _this.props.validation;
+      var has = validation.has,
+          addListener = validation.addListener;
+
+      if (has && addListener) {
+        if (!validation.has(_assertThisInitialized(_this))) {
+          _this.unSubscribe(); // first unsubscribe previous
+
+
+          _this.validation = validation;
+
+          _this.validation.addListener(_assertThisInitialized(_this), _this.onMessages);
+        }
+      } else {
+        throw 'invalid valition passed to VForm';
+      }
+    };
+
+    _this.unSubscribe = function () {
+      _this.validation.removeListener(_assertThisInitialized(_this));
+    };
+
+    _this.state = {
+      messages: props.defaultMessages || {}
+    };
+    _this.validation = props.validation;
+    return _this;
   }
 
   _createClass(VForm, [{
+    key: "componentDidUpdate",
+    value: function componentDidUpdate() {
+      this.subscribe();
+    }
+  }, {
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      this.subscribe();
+    }
+  }, {
+    key: "componentWillUnmount",
+    value: function componentWillUnmount() {
+      this.unSubscribe();
+    }
+  }, {
     key: "render",
     value: function render() {
-      var _this$props = this.props,
-          messages = _this$props.messages,
-          children = _this$props.children;
       return _react["default"].createElement(_reactInputMessage.MessageContainer, {
-        messages: messages
-      }, children);
+        messages: this.messages
+      }, this.props.children);
+    }
+  }, {
+    key: "messages",
+    get: function get() {
+      return 'messages' in this.props ? this.props.messages : this.state.messages;
     }
   }]);
 
@@ -58,6 +114,10 @@ function (_React$Component) {
 }(_react["default"].Component);
 
 exports["default"] = VForm;
+VForm.defaultProps = {
+  validation: _v["default"].create({}) // validation with empty rules
+
+};
 
 VForm.fieldFactory = function (C) {
   var CustomField = (0, _reactInputMessage.connectToMessageContainer)((0, _Field["default"])(C), {

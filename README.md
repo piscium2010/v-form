@@ -4,7 +4,9 @@ This is not a form, instead it is only a form shell of which the single responsi
 <div align="center">
 <img width="600px" src="https://upload-images.jianshu.io/upload_images/11189734-0118629c411dd98f.gif?imageMogr2/auto-orient/strip"/>
 </div>
+
 ## Install
+
 ```js
 npm i -S v-form
 ```

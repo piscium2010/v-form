@@ -11,9 +11,10 @@ const options = [
 ]
 
 const Field = VForm.fieldFactory(({ name, message, children }) => {
+    const { Children, cloneElement } = React
     return (
         <div>
-            {React.Children.map(children, c => React.cloneElement(c, { errorMessage: message }))}
+            {Children.map(children, c => cloneElement(c, { errorMessage: message }))}
         </div>
     )
 })
@@ -33,36 +34,30 @@ const DateField = VForm.fieldFactory(({ name, message, children }) => {
 const validation = v.create({
     email: v.expect('Required').expect('Should be email', c => v.isEmail(c.email)),
     marriage: [
-        v.expect('Required').expect('Should be single or married', c => ['single', 'married'].includes(c.marriage)),
+        v.expect('Required'),
         v.when('marriage', c => c.marriage === 'single').validate('marriage_date')
     ],
     marriage_date: v.when('marriage', c => c.marriage === 'married').expect('Required when married')
 })
 
 export default class Form extends React.Component {
-    state = {
-        values: {},
-        messages: {}
-    }
+    state = { values: {} }
 
-    updateForm = value => {
-        const result = validation.test(value, this.state.values)
-        const messages = { ...this.state.messages, ...result.messages }
-        const values = { ...this.state.values, ...value }
-        this.setState({ values, messages })
+    update = value => {
+        const { values } = this.state
+        validation.test(value, values/* context */)
+        this.setState({ values: { ...values, ...value } })
     }
 
     onSubmit = () => {
-        const result = validation.testAllRules(this.state.values)
-        const messages = { ...this.state.messages, ...result.messages }
-        this.setState({ messages })
+        const { values } = this.state
+        const result = validation.testAllRules(values)
         if (result.pass) {
             window.alert('pass')
         }
     }
 
     render() {
-        const { messages, values } = this.state
         return (
             <div style={{ width: 400, margin: 'auto' }}>
                 <p>Validation rules as:</p>
@@ -71,26 +66,26 @@ export default class Form extends React.Component {
                     <li>Marriage is required</li>
                     <li>Date of marriage is required only when married</li>
                 </ul>
-                <VForm messages={messages}>
+                <VForm validation={validation}>
                     <Field name='email'>
                         <TextField
                             label="Email"
-                            onChange={(evt, value) => this.updateForm({ email: value })}
+                            onChange={(evt, value) => this.update({ email: value })}
                         />
                     </Field>
                     <Field name='marriage'>
                         <Dropdown
                             label="Marriage"
                             options={options}
-                            onChange={(evt, option) => this.updateForm({ marriage: option.key })}
+                            onChange={(evt, option) => this.update({ marriage: option.key })}
                         />
                     </Field>
                     <DateField name='marriage_date'>
                         <DatePicker
-                            value={values.marriage_date}
+                            value={this.state.values.marriage_date}
                             label="Date of Marriage"
                             firstDayOfWeek={DayOfWeek.firstDayOfWeek}
-                            onSelectDate={d => this.updateForm({ marriage_date: d })}
+                            onSelectDate={d => this.update({ marriage_date: d })}
                         />
                     </DateField>
                     <PrimaryButton text='Submit' onClick={this.onSubmit} />

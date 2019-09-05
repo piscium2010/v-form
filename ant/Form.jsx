@@ -26,20 +26,20 @@ export default class Form extends React.Component {
     state = { values: {} }
 
     update = value => {
-        validation.test(value, this.state.values)
-        const nextValues = { ...this.state.values, ...value }
-        this.setState({ values: nextValues })
+        const { values } = this.state
+        validation.test(value, values /* context */)
+        this.setState({ values: { ...values, ...value } })
     }
 
     onSubmit = () => {
-        validation.testAllRules(this.state.values)
+        const { values } = this.state
+        const result = validation.testAllRules(values)
         if (result.pass) {
             window.alert('pass')
         }
     }
 
     render() {
-        
         return (
             <div style={style}>
                 <p>Validation rules as:</p>

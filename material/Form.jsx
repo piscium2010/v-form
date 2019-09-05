@@ -10,17 +10,19 @@ import DateFnsUtils from '@date-io/date-fns'
 import VForm, { v } from 'v-form'
 
 const useStyles = makeStyles(theme => ({
-    textField: { width: 300 },
-    select: { width: 300 }
+    textField: { width: 300, marginBottom: 20 },
+    select: { width: 300, marginBottom: 20 },
+    picker: { width: 300, marginBottom: 20 }
 }))
 
 const Field = VForm.fieldFactory(({ name, message, children }) => {
     const { Children, cloneElement } = React
     const hasError = message ? true : false
+    const errorStyle = { color: '#f44336', fontSize: 12 }
     return (
-        <div style={{ marginBottom: 10 }}>
-            {Children.map(children, element => cloneElement(element, { error: hasError }))}
-            <div style={{ color: '#f44336', fontSize: 12 }}>{message}</div>
+        <div>
+            {Children.map(children, c => cloneElement(c, { error: hasError }))}
+            <div style={errorStyle}>{message}</div>
         </div>
     )
 })
@@ -36,18 +38,15 @@ const validation = v.create({
 })
 
 export default function Form() {
-    const [messages, setMessages] = useState({})
     const [values, setValues] = useState({ email: '', marriage: '', birth_date: new Date() })
 
     const update = value => {
-        const result = validation.test(value, values)
-        setMessages({ ...messages, ...result.messages })
+        validation.test(value, values/* context */)
         setValues({ ...values, ...value })
     }
 
     const onSubmit = () => {
         const result = validation.testAllRules(values)
-        setMessages({ ...messages, ...result.messages })
         if (result.pass) {
             window.alert('pass')
         }
@@ -65,7 +64,7 @@ export default function Form() {
                     <li>Marriage is required</li>
                     <li>Birth date year can not be current year</li>
                 </ul>
-                <VForm messages={messages}>
+                <VForm validation={validation}>
                     <InputLabel>Email</InputLabel>
                     <Field name='email'>
                         <TextField
@@ -87,12 +86,20 @@ export default function Form() {
                     <InputLabel>Birth Date</InputLabel>
                     <Field name='birth_date'>
                         <KeyboardDatePicker
+                        className={classes.picker}
                             format="MM/dd/yyyy"
                             value={values.birth_date}
                             onChange={d => update({ birth_date: d })}
                         />
                     </Field>
-                    <Button variant="contained" color="primary" className={classes.button} onClick={onSubmit}>Submit</Button>
+                    <Button
+                        variant="contained"
+                        color="primary"
+                        className={classes.button}
+                        onClick={onSubmit}
+                    >
+                        Submit
+                    </Button>
                 </VForm>
             </div>
         </MuiPickersUtilsProvider>

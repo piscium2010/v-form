@@ -10,15 +10,15 @@ import DateFnsUtils from '@date-io/date-fns'
 import VForm, { v } from 'v-form'
 
 const useStyles = makeStyles(theme => ({
-    textField: { width: 300, marginBottom: 20 },
-    select: { width: 300, marginBottom: 20 },
-    picker: { width: 300, marginBottom: 20 }
+    textField: { width: 300, marginBottom: 5 },
+    select: { width: 300, marginBottom: 5 },
+    picker: { width: 300, marginBottom: 5 }
 }))
 
 const Field = VForm.fieldFactory(({ name, message, children }) => {
     const { Children, cloneElement } = React
     const hasError = message ? true : false
-    const errorStyle = { color: '#f44336', fontSize: 12 }
+    const errorStyle = { color: '#f44336', fontSize: 12, marginBottom: 15 }
     return (
         <div>
             {Children.map(children, c => cloneElement(c, { error: hasError }))}

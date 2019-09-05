@@ -14,7 +14,15 @@
     "build:mat": "webpack --config material/webpack.material.js --env.NODE_ENV=production",
     "build": "gulp"
   },
-  "keywords": [],
+  "keywords": [
+    "form",
+    "validation",
+    "rule",
+    "react-formal",
+    "yup",
+    "v-rule",
+    "v-form"
+  ],
   "author": "piscium2010 <541032442@qq.com>",
   "license": "ISC",
   "dependencies": {

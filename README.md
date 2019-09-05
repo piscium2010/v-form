@@ -13,7 +13,9 @@ npm i -S v-form
 
 ## Use
 
-v-form is a shell, so it works well with any UI libraries like antd, office fabric and material ui. Following are examples.
+v-form is a shell, so it works well with any UI libraries like antd, office fabric and material ui. Please find following examples.
+
+More about validation[v-rule](https://github.com/piscium2010/v-rule)
 
 ### Ant Design
 
@@ -68,7 +70,7 @@ export default class Form extends React.Component {
                     <li>Marriage is required</li>
                     <li>Date of marriage is required only when married</li>
                 </ul>
-                <VForm validation={validation} defaultMessages={{email:'absd'}}>
+                <VForm validation={validation}>
                     <Field name='email'>
                         <Input
                             placeholder='Email'

@@ -1,7 +1,7 @@
 # v-form
 This is not a form, instead it is only a form shell of which the single responsibility is validating and providing error messages. Capable of definding flexiable rules and validating multi fields at a time.
 
-<img src="https://upload-images.jianshu.io/upload_images/11189734-015a03c40eed3324.gif?imageMogr2/auto-orient/strip"/>
+<img width="600px" src="https://upload-images.jianshu.io/upload_images/11189734-0118629c411dd98f.gif?imageMogr2/auto-orient/strip"/>
 
 ## Install
 ```js

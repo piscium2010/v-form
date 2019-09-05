@@ -5,7 +5,9 @@ import Form from './Form'
 class App extends React.Component {
     render() {
         return (
-            <Form />
+            <div style={{height: 380}}>
+                <Form />
+            </div>
         )
     }
 }

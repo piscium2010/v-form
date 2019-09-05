@@ -48,7 +48,7 @@ export default class Form extends React.Component {
                     <li>Marriage is required</li>
                     <li>Date of marriage is required only when married</li>
                 </ul>
-                <VForm validation={validation} defaultMessages={{email:'absd'}}>
+                <VForm validation={validation}>
                     <Field name='email'>
                         <Input
                             placeholder='Email'

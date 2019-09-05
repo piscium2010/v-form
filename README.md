@@ -8,7 +8,7 @@ This is not a form, instead it is only a form shell of which the single responsi
 ## Install
 
 ```js
-npm i -S v-form
+npm i -S @piscium2010/v-form
 ```
 
 ## Use

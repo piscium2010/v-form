@@ -1,5 +1,5 @@
 import React from 'react'
-import { MessageContainer, connectToMessageContainer } from './lib/react-input-message'
+import { MessageContainer, connectToMessageContainer } from 'react-input-message'
 import Field from './Field'
 import v from './v'
 

@@ -7,7 +7,7 @@ exports["default"] = void 0;
 
 var _react = _interopRequireDefault(require("react"));
 
-var _reactInputMessage = require("./lib/react-input-message");
+var _reactInputMessage = require("react-input-message");
 
 var _Field = _interopRequireDefault(require("./Field"));
 

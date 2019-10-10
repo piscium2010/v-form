@@ -13,15 +13,11 @@ export default function FieldHOC(C) {
             if (this.context.name !== 'VForm') {
                 throw 'Please wrap field components under component VForm'
             }
-            const { name, messages, children } = this.props
+            const { name, messages, children, ...restProps } = this.props
             const message = typeof messages === 'string' ? messages : ''
             return (
-                <C name={name} message={message} >
-                    {
-                        React.Children.toArray(children, element =>
-                            React.cloneElement(element, { name })
-                        )
-                    }
+                <C name={name} message={message} {...restProps}>
+                    {children}
                 </C>
             )
         }

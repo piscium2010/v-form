@@ -4,7 +4,7 @@ export default function FieldHOC(C) {
     return class Field extends React.Component {
         constructor(props) {
             super(props)
-            if(!props.name) { throw 'name is required for VForm Field' }
+            if(!props.name) { throw 'name is required for component created by VForm.fieldFactory' }
         }
 
         render() {

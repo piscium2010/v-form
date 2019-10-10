@@ -11,6 +11,8 @@ var _reactInputMessage = require("react-input-message");
 
 var _Field = _interopRequireDefault(require("./Field"));
 
+var _Context = require("./Context");
+
 var _v = _interopRequireDefault(require("./v"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
@@ -107,9 +109,13 @@ function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      return _react["default"].createElement(_reactInputMessage.MessageContainer, {
+      return _react["default"].createElement(_Context.VFormContext.Provider, {
+        value: {
+          name: 'VForm'
+        }
+      }, _react["default"].createElement(_reactInputMessage.MessageContainer, {
         messages: this.messages
-      }, this.props.children);
+      }, this.props.children));
     }
   }, {
     key: "messages",

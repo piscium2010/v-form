@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { render, fireEvent } from '@testing-library/react'
+import TestRenderer from 'react-test-renderer'
 import VForm, { v } from '../dist'
 
 const Field = VForm.fieldFactory(({ name, message, children }) => {
@@ -141,3 +142,27 @@ test('messages', () => {
     fireEvent.click(getByText(/submit/i))
     expect(queryByText(/abcd/i)).toBeTruthy()
 })
+
+test('should wrap field components under <VForm/>', () => {
+    const msg = 'Please wrap field components under component VForm'
+    const ins = TestRenderer.create(
+        <TestingError>
+            <Field name='email'></Field>
+        </TestingError>
+    )
+    const errorMsg = ins.root.findByProps({className:'er'}).children[0]
+    expect(errorMsg).toBe(msg)
+})
+
+
+class TestingError extends React.Component {
+    static getDerivedStateFromError(error) {
+        return { hasError: true, error }
+    }
+
+    state = { hasError: false }
+
+    render() {
+        return this.state.hasError ? <label className='er'>{this.state.error}</label> : this.props.children
+    }
+}

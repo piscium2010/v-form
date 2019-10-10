@@ -1,7 +1,9 @@
 import React from 'react'
 import { MessageContainer, connectToMessageContainer } from 'react-input-message'
 import Field from './Field'
+import { VFormContext } from './Context'
 import v from './v'
+
 
 export default class VForm extends React.Component {
     static defaultProps = {
@@ -73,7 +75,9 @@ export default class VForm extends React.Component {
 
     render() {
         return (
-            <MessageContainer messages={this.messages}>{this.props.children}</MessageContainer>
+            <VFormContext.Provider value={{name:'VForm'}}>
+                <MessageContainer messages={this.messages}>{this.props.children}</MessageContainer>
+            </VFormContext.Provider>
         )
     }
 }

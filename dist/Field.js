@@ -7,6 +7,8 @@ exports["default"] = FieldHOC;
 
 var _react = _interopRequireDefault(require("react"));
 
+var _Context = require("./Context");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -28,45 +30,50 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
 function FieldHOC(C) {
-  return (
-    /*#__PURE__*/
-    function (_React$Component) {
-      _inherits(Field, _React$Component);
+  var _class, _temp;
 
-      function Field(props) {
-        var _this;
+  return _temp = _class =
+  /*#__PURE__*/
+  function (_React$Component) {
+    _inherits(Field, _React$Component);
 
-        _classCallCheck(this, Field);
+    function Field(props) {
+      var _this;
 
-        _this = _possibleConstructorReturn(this, _getPrototypeOf(Field).call(this, props));
+      _classCallCheck(this, Field);
 
-        if (!props.name) {
-          throw 'name is required for VForm Field';
-        }
+      _this = _possibleConstructorReturn(this, _getPrototypeOf(Field).call(this, props));
 
-        return _this;
+      if (!props.name) {
+        throw 'prop name is required for field component created by VForm.fieldFactory';
       }
 
-      _createClass(Field, [{
-        key: "render",
-        value: function render() {
-          var _this$props = this.props,
-              name = _this$props.name,
-              messages = _this$props.messages,
-              children = _this$props.children;
-          var message = typeof messages === 'string' ? messages : '';
-          return _react["default"].createElement(C, {
-            name: name,
-            message: message
-          }, _react["default"].Children.toArray(children, function (element) {
-            return _react["default"].cloneElement(element, {
-              name: name
-            });
-          }));
-        }
-      }]);
+      return _this;
+    }
 
-      return Field;
-    }(_react["default"].Component)
-  );
+    _createClass(Field, [{
+      key: "render",
+      value: function render() {
+        if (this.context.name !== 'VForm') {
+          throw 'Please wrap field components under component VForm';
+        }
+
+        var _this$props = this.props,
+            name = _this$props.name,
+            messages = _this$props.messages,
+            children = _this$props.children;
+        var message = typeof messages === 'string' ? messages : '';
+        return _react["default"].createElement(C, {
+          name: name,
+          message: message
+        }, _react["default"].Children.toArray(children, function (element) {
+          return _react["default"].cloneElement(element, {
+            name: name
+          });
+        }));
+      }
+    }]);
+
+    return Field;
+  }(_react["default"].Component), _class.contextType = _Context.VFormContext, _temp;
 }

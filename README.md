@@ -15,7 +15,7 @@ npm i -S @piscium2010/v-form
 
 v-form is a shell, so it works well with any UI libraries like antd, office fabric and material ui. Please find following examples.
 
-More about validation [v-rule](https://github.com/piscium2010/v-rule)
+More complex validation, please refer [v-rule](https://github.com/piscium2010/v-rule)
 
 ### Ant Design
 
